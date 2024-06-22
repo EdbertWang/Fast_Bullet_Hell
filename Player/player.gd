@@ -7,7 +7,8 @@ extends "res://Utilities/Base_Unit.gd"
 
 func _ready():
 	print("Calling player ready")
-	abilities.append(Ability_Info.new("Sword", 1))
+	#abilities.append(Ability_Info.new("Sword", 1))
+	abilities.append(Ability_Info.new("Firebolt", 1))
 
 func _physics_process(delta):
 	player_movement()

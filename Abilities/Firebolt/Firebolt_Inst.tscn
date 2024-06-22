@@ -1,0 +1,61 @@
+[gd_scene load_steps=7 format=3 uid="uid://c0oetqql751gt"]
+
+[ext_resource type="Script" path="res://Abilities/Firebolt/Firebolt_Inst.gd" id="1_ftvaf"]
+[ext_resource type="Texture2D" uid="uid://cfcs7iicqq8d2" path="res://Abilities/Firebolt/firebolt.png" id="1_j15v7"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_up6p0"]
+radius = 3.0
+
+[sub_resource type="Animation" id="Animation_j86vk"]
+resource_name = "Firebolt"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_nkx86"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_q7h4l"]
+_data = {
+"Firebolt": SubResource("Animation_j86vk"),
+"RESET": SubResource("Animation_nkx86")
+}
+
+[node name="FireboltInst" type="Area2D"]
+script = ExtResource("1_ftvaf")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_j15v7")
+hframes = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1)
+shape = SubResource("CircleShape2D_up6p0")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_q7h4l")
+}

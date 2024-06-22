@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://73o10yberub2"]
+[gd_scene load_steps=12 format=3 uid="uid://73o10yberub2"]
 
 [ext_resource type="Script" path="res://Environment/World.gd" id="1_ug3t1"]
 [ext_resource type="Texture2D" uid="uid://30eoyrovnhqk" path="res://Textures/tiles2.png" id="3_kgivs"]
@@ -6,6 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://csmh6yii4xopt" path="res://Textures/Dungeon/Dungeon_Tileset.png" id="4_8ri4d"]
 [ext_resource type="Texture2D" uid="uid://ch5mxc3bb3b4q" path="res://Textures/terrain.png" id="4_u5yja"]
 [ext_resource type="Script" path="res://Environment/Entity_Base.gd" id="5_yo4ob"]
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_ebw2w"]
+tile_data = PackedInt32Array(0, 262144, 5, 65536, 327680, 2, 131072, 327680, 3, 196608, 327680, 2, 262144, 327680, 2, 327680, 327680, 3, 393216, 196608, 0, 1, 131072, 5, 65537, 0, 0, 131073, 0, 1, 196609, 0, 2, 262145, 0, 3, 327681, 0, 4, 393217, 131072, 0, 2, 65536, 4, 65538, 65536, 0, 131074, 65536, 1, 196610, 65536, 2, 262146, 65536, 3, 327682, 196608, 5, 393218, 262144, 0, 3, 131072, 5, 65539, 131072, 0, 131075, 131072, 1, 196611, 131072, 2, 262147, 131072, 3, 327683, 131072, 6, 393219, 589824, 7, 4, 131072, 4, 65540, 196608, 0, 131076, 196608, 1, 196612, 196608, 2, 262148, 196608, 3, 327684, 131072, 6, 393220, 589824, 7, 5, 65536, 4, 65541, 262144, 0, 131077, 262144, 1, 196613, 262144, 2, 262149, 262144, 3, 327685, 262144, 5, 393221, 262144, 0, 6, 131072, 5, 65542, 327680, 0, 131078, 327680, 1, 196614, 327680, 2, 262150, 327680, 3, 327686, 327680, 4, 393222, 196608, 0, 7, 196608, 5, 65543, 0, 0, 131079, 0, 2, 196615, 0, 3, 262151, 0, 3, 327687, 0, 2, 393223, 131072, 0)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_utw84"]
 resource_name = "dungeon"
@@ -1128,6 +1131,7 @@ custom_data_layer_0/type = 2
 sources/0 = SubResource("TileSetAtlasSource_utw84")
 sources/1 = SubResource("TileSetAtlasSource_o1lom")
 sources/2 = SubResource("TileSetAtlasSource_kqq2w")
+pattern_0 = SubResource("TileMapPattern_ebw2w")
 
 [node name="World" type="Node2D" groups=["world"]]
 script = ExtResource("1_ug3t1")

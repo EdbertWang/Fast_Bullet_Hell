@@ -3,8 +3,8 @@ extends Node
 @onready var player = preload("res://Player/player.tscn")
 @export var spawn_power : int = 0
 @onready var enemies : Array[Object] = [] # Store the possible enemies to spawn in an array
-@onready var enemy_names : Array[String] = []
-@onready var seen_chunks = {}
+@onready var enemy_names : Array[String] = [] # Store their possible names, use this mostly to index
+@onready var seen_chunks = {} # Map Vector2 to boolean
 
 func spawn_player(player_pos: Vector2):
 	var p = player.instantiate()
@@ -40,44 +40,32 @@ func spawn_enemies(curr_chunk : Vector2, level_size: Vector2, camera_size: Vecto
 					var e = enemies[curr_index].instantiate()
 					for new_e in e.spawn(enemy_names[curr_index], spawn_loc, []): # TODO: passing args to certain enemies
 						self.add_child(new_e)
-					print(e)
-					#print(enemy_names[curr_index])
-					print(get_children())
-					print("**********************************")
-					#print(e.get_children())
+					#print("Spawned ", e)
 				start_index = curr_index
 				fail_match = 0
-
 			curr_index += 1
 			if curr_index == enemies.size():
 				curr_index = 0
 			if curr_index == start_index: # Does 2 passes to ensure that nothing left can be spawned
 				fail_match += 1
 
-
 func load_enemies(curr_chunk : Vector2, biome : String, distance : int): # Put enemies into the enemies list
-	#enemies.clear()
-	#enemy_names.clear()
-	if curr_chunk in seen_chunks: # Not necessary if already seen
-		return
-		
+	if curr_chunk in seen_chunks: return # Not necessary if already seen
 	var biome_index = DataContainer.get_enemy_property_index("SpawnInfo")
 	for i in DataContainer.ENEMIES: # i is the name of the enemy
 		var enemy_val = DataContainer.ENEMIES[i]
 		# Check if enemy can spawn in this biome, and if we are at right distance
-		print(enemy_val)
+		#print(enemy_val)
 		if enemy_val[biome_index].has(biome) and distance >= enemy_val[biome_index][biome][0] and distance <= enemy_val[biome_index][biome][1]:
 			enemies.append(load("res://Enemy/" + i + ".tscn"))
 			enemy_names.append(i)
 
-func save_enemies(curr_tile : Vector2):
+func save_enemies(curr_tile : Vector2): # Saves relevant data of enemies in a dictionary
 	var curr_enemies = []
 	for i in self.get_children():
 		if not i.is_in_group("player"):
-			curr_enemies.append(i.get_save_data())
+			curr_enemies.append(i.get_save_data()) # get_save_data returns a dictionary with the things we need to save
 			i.queue_free()
-			#i.paused = true
-			#i.sprite.visible = false
 	seen_chunks[curr_tile] = curr_enemies
 	
 	

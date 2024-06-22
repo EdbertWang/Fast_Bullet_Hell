@@ -17,9 +17,14 @@ var player : Object
 func _ready(): # Need to use postload since ready of children called before ready of parent
 	print("Loading Data")
 	DataContainer.parse_enemies()
+	DataContainer.parse_biome_colors()
+	
 	
 	print("Generating Level")
+	DataContainer.generate_biome_grid()
 	tile_base.generate_chunk(Vector2(0,0), level_size,camera_size)
+	
+	
 	print("Spawning Entites")
 	entity_base.spawn_player(Vector2(0,0))
 	entity_base.load_enemies(Vector2(0,0), "Forest",0)

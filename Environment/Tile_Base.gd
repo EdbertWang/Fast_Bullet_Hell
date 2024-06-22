@@ -6,6 +6,7 @@ enum tile_sets {
 	TERRAIN,
 }
 
+
 # TODO: change tile sets depending on the biome
 
 var moisture = FastNoiseLite.new()
@@ -13,6 +14,7 @@ var temperature = FastNoiseLite.new()
 var altitude = FastNoiseLite.new()
 
 @onready var seen_chunks  = {}
+
 
 const EXIT_TILE : Vector2i = Vector2i(4,0)
 
@@ -55,6 +57,8 @@ func generate_chunk(curr_tile:Vector2, level_size: Vector2, camera_size: Vector2
 		set_cell(DataContainer.tile_layers.BACKGROUND,Vector2i(xr - cx, y - cy),tile_sets.WORLD, EXIT_TILE)
 		set_cell(DataContainer.tile_layers.BACKGROUND,Vector2i(-cx - 1, y - cy),tile_sets.WORLD, EXIT_TILE)
 	
+	gen_structures()
+	
 	return [moisture.seed, temperature.seed, altitude.seed]
 	
 func unload_chunk(level_size: Vector2, camera_size: Vector2):
@@ -66,6 +70,11 @@ func unload_chunk(level_size: Vector2, camera_size: Vector2):
 		for y in range(yr):
 			erase_cell(0,Vector2i(x - cx,y - cy))
 
+func gen_structures(): # TODO:  determine what to generate
+	for i in range(1):
+		var pttrn = tile_set.get_pattern(0)
+		set_pattern(0, Vector2i(10, 10), pttrn)
+		pass
 
 """
 @export var rooms_size : Vector2 = Vector2(10, 14)
