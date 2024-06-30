@@ -1,3 +1,4 @@
 Name,SpawnCost,MaxHP,MaxMana,ManaRegen,Damage,AttackSpeed,Armor,MoveSpeed,KnockBackRecovery,Abilites,SpawnInfo
-sword_skeleton,1,100,100,10,5,1,0,100,50,Sword,"Dungeon,0,2,Forest,0,3"
+sword_skeleton,1,10,100,10,5,1,0,100,50,Sword,"Dungeon,0,2,Forest,0,3"
+caster_skeleton,1,5,200,10,10,1,0,50,50,Firebolt,"Dungeon,0,2,Forest,0,3"
 temp_enemy,2,10,10,0,100,1,0,0,100,Sword,"Dungeon,3,4"

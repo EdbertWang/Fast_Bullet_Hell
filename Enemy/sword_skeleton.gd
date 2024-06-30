@@ -1,9 +1,5 @@
 extends "res://Utilities/Base_Enemy.gd"
 
-func _ready():
-	print("Calling ready from ", self)
-	abilities.append(Ability_Info.new("Sword"))
-
 
 func chaser_ai():
 	super()

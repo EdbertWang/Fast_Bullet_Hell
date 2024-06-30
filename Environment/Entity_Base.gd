@@ -25,7 +25,6 @@ func spawn_enemies(curr_chunk : Vector2, level_size: Vector2, camera_size: Vecto
 		var curr_index : int = start_index
 		var fail_match : int = 0
 		while curr_spawn_power > 0 and fail_match < 2:
-			# TODO: Find out how to properly call functions on loaded scenes
 			var curr_enemy : Array = DataContainer.get_enemy(enemy_names[curr_index])
 			var curr_enemy_spawn_cost : int = int(curr_enemy[DataContainer.get_enemy_property_index("SpawnCost")])
 			if curr_enemy_spawn_cost <= curr_spawn_power:

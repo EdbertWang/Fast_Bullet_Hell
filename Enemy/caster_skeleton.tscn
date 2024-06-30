@@ -1,8 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://cw1im2ibwrppe"]
+[gd_scene load_steps=9 format=3 uid="uid://ov33uh7qbmet"]
 
-[ext_resource type="PackedScene" uid="uid://dostoik0n0s6w" path="res://Utilities/Base_Enemy.tscn" id="1_70vxc"]
-[ext_resource type="Script" path="res://Enemy/sword_skeleton.gd" id="2_8yrcx"]
-[ext_resource type="Texture2D" uid="uid://dnvv2orleu5wf" path="res://Textures/Dungeon/Character_animation/monsters_idle/skeleton2/v2/spritesheet.png" id="3_3gwio"]
+[ext_resource type="PackedScene" uid="uid://dostoik0n0s6w" path="res://Utilities/Base_Enemy.tscn" id="1_cceu5"]
+[ext_resource type="Script" path="res://Enemy/caster_skeleton.gd" id="2_6tq8j"]
+[ext_resource type="Texture2D" uid="uid://dnvv2orleu5wf" path="res://Textures/Dungeon/Character_animation/monsters_idle/skeleton2/v2/spritesheet.png" id="3_i460b"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_f3e8t"]
 radius = 5.0
@@ -12,20 +12,19 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/path = NodePath("Sprite2D:frame_coords")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [3]
+"values": [Vector2i(0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_olniu"]
 resource_name = "walk"
 length = 0.5
-loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -48,18 +47,12 @@ _data = {
 [sub_resource type="CircleShape2D" id="CircleShape2D_5p31f"]
 radius = 6.08276
 
-[node name="Sword Skeleton" instance=ExtResource("1_70vxc")]
-script = ExtResource("2_8yrcx")
-max_hp = 100
-max_mana = 100
-mana_regen = 10
-base_speed = 150
-knock_back_recovery = 50.0
+[node name="Caster Skeleton" instance=ExtResource("1_cceu5")]
+script = ExtResource("2_6tq8j")
 
 [node name="Sprite2D" parent="." index="0"]
-texture = ExtResource("3_3gwio")
+texture = ExtResource("3_i460b")
 hframes = 5
-frame = 3
 
 [node name="CollisionShape2D" parent="." index="1"]
 shape = SubResource("CircleShape2D_f3e8t")
@@ -73,7 +66,6 @@ libraries = {
 visible = false
 
 [node name="HurtBox" parent="." index="4"]
-visible = false
 collision_layer = 0
 collision_mask = 4
 

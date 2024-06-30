@@ -87,7 +87,7 @@ func parse_enemies():
 	var multi_item_dict : Dictionary = {}
 	var multi_item_list : Array = []
 	for i in csv: # Iterate over csv
-		print(i)
+		#print(i)
 		items.clear()
 		var enemy_name = i[0]
 		i.remove_at(0)
@@ -124,3 +124,8 @@ func get_enemy_property_index(name : String) -> int: # Returns index of property
 
 func parse_abilites():
 	pass
+
+func dump():
+	print(ENEMIES)
+	print(ABILITES)
+

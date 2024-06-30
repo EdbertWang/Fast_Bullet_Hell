@@ -5,7 +5,7 @@ var life_time : float = 1.5
 var damage : int
 var speed : float
 
-func config(s=null,pos=Vector2(0,0), rot = 0, layer = 1,spd = 5, dmg = 5, size = Vector2(1,1)):
+func config(s=null,pos=Vector2(0,0), rot = 0, layer = 1,spd = 3, dmg = 5, size = Vector2(1,1)):
 	#print("Config Called")
 	parent = s
 	position = pos

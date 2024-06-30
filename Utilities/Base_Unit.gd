@@ -115,3 +115,27 @@ func set_properties(args_dict):
 	position = args_dict["position"]
 	curr_hp = args_dict["curr_hp"]
 	curr_mana = args_dict["curr_mana"]
+	
+	
+func spawn(unit_name: String, spawn_loc : Vector2, misc_args : Array) -> Array[Object]: # Will be overridden in chilren
+	self.position = spawn_loc
+	self.unit_name = unit_name
+	var unit_info = DataContainer.ENEMIES[unit_name]
+	
+	# Lookup the entity's values in the data container
+	self.max_hp = unit_info[DataContainer.get_enemy_property_index("MaxHP")]
+	self.max_mana = unit_info[DataContainer.get_enemy_property_index("MaxMana")]
+	self.mana_regen = unit_info[DataContainer.get_enemy_property_index("ManaRegen")]
+	self.armor = unit_info[DataContainer.get_enemy_property_index("Armor")]
+	self.base_speed = unit_info[DataContainer.get_enemy_property_index("MoveSpeed")]
+	self.knock_back_recovery = unit_info[DataContainer.get_enemy_property_index("KnockBackRecovery")]
+
+	self.move_speed  = base_speed
+	self.curr_mana  = max_mana
+	self.curr_hp = max_hp
+	
+	# Get its abilites into the array
+	for key in unit_info[unit_info.size() - 2]: # TODO: May have to update if location of abilities dict changes location
+		abilities.append(Ability_Info.new(key))
+
+	return [self]

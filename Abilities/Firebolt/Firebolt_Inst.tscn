@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cfcs7iicqq8d2" path="res://Abilities/Firebolt/firebolt.png" id="1_j15v7"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_up6p0"]
-radius = 3.0
+radius = 6.0
 
 [sub_resource type="Animation" id="Animation_j86vk"]
 resource_name = "Firebolt"
@@ -48,11 +48,12 @@ _data = {
 script = ExtResource("1_ftvaf")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
 texture = ExtResource("1_j15v7")
 hframes = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -1)
+position = Vector2(0, -2)
 shape = SubResource("CircleShape2D_up6p0")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

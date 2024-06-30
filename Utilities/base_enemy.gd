@@ -11,10 +11,7 @@ var fix_curr_ai : bool = false
 
 @export var spawn_cost : int
 
-func spawn(unit_name: String, spawn_loc : Vector2, misc_args : Array) -> Array[Object]: # Will be overridden in chilren
-	self.position = spawn_loc
-	self.unit_name = unit_name
-	return [self]
+
 
 func _ready():
 	orignal_position = position
@@ -39,8 +36,12 @@ func chaser_ai():
 	set_target()
 
 func patrol_ai():
-	print(self, " is patroling")
+	#print(self, " is patroling")
 	move_target = orignal_position + Vector2(randi_range(-200,200), randi_range(-200,200))
+	
+func retreat_ai(): # Current Target must be set to retreat
+	print(self, " is retreating")
+	move_target = 2 * position - current_target.position
 
 func ai_control(): # TODO: How to properly do intelligent AI
 	#print(current_target)
