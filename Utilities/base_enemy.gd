@@ -40,8 +40,11 @@ func patrol_ai():
 	move_target = orignal_position + Vector2(randi_range(-200,200), randi_range(-200,200))
 	
 func retreat_ai(): # Current Target must be set to retreat
-	print(self, " is retreating")
-	move_target = 2 * position - current_target.position
+	if not fix_curr_ai:
+		print(self, " is retreating")
+		move_target = 2 * position - current_target.position
+		switch_ai.start(switch_ai.wait_time + randi_range(-2,2))
+		fix_curr_ai = true
 
 func ai_control(): # TODO: How to properly do intelligent AI
 	#print(current_target)

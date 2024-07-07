@@ -44,7 +44,7 @@ _data = {
 "RESET": SubResource("Animation_nkx86")
 }
 
-[node name="FireboltInst" type="Area2D"]
+[node name="FireboltInst" type="Area2D" groups=["projectile"]]
 script = ExtResource("1_ftvaf")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

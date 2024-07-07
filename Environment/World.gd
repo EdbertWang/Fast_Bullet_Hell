@@ -19,11 +19,9 @@ func _ready(): # Need to use postload since ready of children called before read
 	DataContainer.parse_enemies()
 	DataContainer.parse_biome_colors()
 	
-	
 	print("Generating Level")
 	DataContainer.generate_biome_grid()
 	tile_base.generate_chunk(Vector2(0,0), level_size,camera_size)
-	
 	
 	print("Spawning Entites")
 	entity_base.spawn_player(Vector2(0,0))
@@ -71,7 +69,13 @@ func create_new_chunk(move_vec : Vector2): # Load new chunk when player moves in
 	curr_chunk += move_vec
 	tile_base.generate_chunk(curr_chunk,level_size,camera_size)
 	
+	#Remove all remoaning projectiles after leaving the chunk
+	for proj in proj_base.get_children():
+		for i in proj.get_children():
+			i.queue_free()
+	
 	entity_base.load_enemies(curr_chunk,"Forest",max(abs(curr_chunk.x), abs(curr_chunk.y))) # TODO: change forest to get biome from data container
 	entity_base.spawn_enemies(curr_chunk,level_size,camera_size)
 	entity_base.call_post_load()
 	
+

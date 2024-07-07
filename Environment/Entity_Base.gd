@@ -16,9 +16,11 @@ func spawn_enemies(curr_chunk : Vector2, level_size: Vector2, camera_size: Vecto
 		for i in seen_chunks[curr_chunk]:
 			var index = enemy_names.find(i["unit_name"])
 			if index >= 0:
+				# Only Spawn the first enemy in unit list
 				var e = enemies[index].instantiate()
-				e.set_properties(i) # TODO: create set properties function
-				add_child(e)
+				e = e.spawn(i["unit_name"], Vector2.ZERO, [])
+				e[0].set_properties(i)
+				add_child(e[0])
 	else:
 		var curr_spawn_power = spawn_power
 		var start_index : int = randi_range(0,enemy_names.size() - 1)
