@@ -3,6 +3,7 @@ class_name GUI
 
 @onready var score_label = $Control/Score
 @onready var timer = $Control/World_Timer
+@onready var minimap = $Control/Minimap
 
 var score = 0:
 	set(new_score):
@@ -18,4 +19,6 @@ func _ready():
 	
 func on_gain_points(point_value : int):
 	score += point_value
-	
+
+func move_minimap(dir : Vector2):
+	minimap.moveMap(dir)

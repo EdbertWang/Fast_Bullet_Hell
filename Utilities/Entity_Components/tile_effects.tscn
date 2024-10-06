@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://cjdrt52yhcalu"]
+
+[ext_resource type="Script" path="res://Utilities/Entity_Components/tile_effects.gd" id="1_k6ooh"]
+
+[node name="Tile_Effects" type="Node2D"]
+script = ExtResource("1_k6ooh")
+
+[node name="Tick_Rate" type="Timer" parent="."]
+wait_time = 0.25
+autostart = true
+
+[connection signal="timeout" from="Tick_Rate" to="." method="_on_tick_rate_timeout"]

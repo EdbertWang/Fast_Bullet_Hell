@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://c3opl6boa3b1s"]
+
+[ext_resource type="PackedScene" uid="uid://45n1f4s4g5hm" path="res://Utilities/Base_projectile.tscn" id="1_qog3x"]
+[ext_resource type="Texture2D" uid="uid://bxhaunts0gsgc" path="res://Textures/Effects/34.png" id="2_jkwal"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5w7dv"]
+atlas = ExtResource("2_jkwal")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_spy5n"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5w7dv")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qtf5p"]
+
+[node name="Player_Attack" instance=ExtResource("1_qog3x")]
+collision_layer = 5
+
+[node name="AnimatedSprite2D" parent="." index="1"]
+sprite_frames = SubResource("SpriteFrames_spy5n")
+
+[node name="CollisionShape2D" parent="." index="2"]
+shape = SubResource("CircleShape2D_qtf5p")
+
+[node name="Lifetime" parent="." index="4"]
+autostart = true
+
+[connection signal="timeout" from="Lifetime" to="." method="_on_lifetime_timeout"]

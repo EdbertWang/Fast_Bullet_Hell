@@ -11,13 +11,15 @@ config_version=5
 [application]
 
 config/name="Fast_BH_Project"
-run/main_scene="res://Environment/World.tscn"
+run/main_scene="res://World_Singletons/World.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
-DataContainer="*res://Utilities/Data_Container.gd"
+DATABASE="*res://Utilities/Data_Container.gd"
+SINGLETONS="*res://Utilities/singletons.gd"
+SIGNALS="*res://Utilities/Global_Signal.gd"
 
 [display]
 
@@ -121,5 +123,6 @@ common/physics_ticks_per_second=240
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"

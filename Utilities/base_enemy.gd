@@ -1,69 +1,74 @@
-extends "res://Utilities/Base_Unit.gd"
+extends Base_Unit
+class_name Enemy
+
+
+const MAX_CHASE_DIST : int = 500
+
+@onready var nav = get_node("NavigationAgent2D")
+@onready var player = null #SINGLETONS.entity_base.get_node("Player")
+@onready var path_timer = $Path_Timer
+var curr_ai : Callable = Callable(self,"idle")
 
 @onready var search_space = $SearchSpace # dict in_range shows what is in detection range
-var move_target : Vector2 = position
-var current_target = null
 
-@onready var switch_ai = $Switch_AI
-var fix_curr_ai : bool = false
 
-@onready var orignal_position : Vector2
-
+#@onready var orignal_position : Vector2
 @export var spawn_cost : int
 
+func do_nav() -> void:
+	if not nav.is_target_reached():
+		move_vec = nav.get_next_path_position() - global_position
 
+	if move_vec.x < 0:
+		sprite.flip_h = true
+	elif move_vec.x > 0: 
+		sprite.flip_h = false
 
-func _ready():
-	orignal_position = position
-	#super()
+func chase() -> void:
+	if player:
+		nav.target_position = player.position
+	else: 
+		nav.target_position = position
+		
+func idle() -> void:
+	nav.target_position = position
 
-func set_target():
-	var min_dist: float = 9999.0
-	var min_obj = null
+func _on_path_timer_timeout(): # Every half a second will try to get location of the player and path towards them
+	if is_instance_valid(player):
+		curr_ai.call()
+	else:
+		nav.target_position = position
+
+func is_close_to_player() -> bool: # Used by FSM to determine when to switch to a chasing state
+	#print(search_space.in_range)
 	for i in search_space.in_range.keys():
 		if i.is_in_group("friendly"):
-			var dist : float = self.position.distance_to(i.position)
-			if dist < min_dist:
-				min_dist = dist
-				min_obj = i
+			player = i
+			return true
+	#player = null
+	return false
+
+func too_far_from_player() -> bool: # used by FSM to determine when to stop chasing
+	if not player or position.distance_to(player.global_position) > MAX_CHASE_DIST:
+		player = null
+		return true
+	return false
+
+func spawn(unit_name: String, spawn_loc : Vector2, misc_args : Array) -> Array[Object]: # Will be overridden in chilren
+	self.position = spawn_loc
+	self.unit_name = unit_name
+	var unit_info = DATABASE.ENEMIES[unit_name]
 	
-	if min_obj != null:
-		move_target = min_obj.position
-	current_target = min_obj
+	# Lookup the entity's values in the data container
+	self.max_hp = unit_info[DATABASE.get_enemy_property_index("MaxHP")]
+	self.max_mana = unit_info[DATABASE.get_enemy_property_index("MaxMana")]
+	self.mana_regen = unit_info[DATABASE.get_enemy_property_index("ManaRegen")]
+	self.armor = unit_info[DATABASE.get_enemy_property_index("Armor")]
+	self.base_speed = unit_info[DATABASE.get_enemy_property_index("MoveSpeed")]
+	self.knock_back_recovery = unit_info[DATABASE.get_enemy_property_index("KnockBackRecovery")]
 
-func chaser_ai():
-	#print(self, " is chasing")
-	set_target()
+	self.move_speed  = base_speed
+	self.curr_mana  = max_mana
+	self.curr_hp = max_hp
 
-func patrol_ai():
-	#print(self, " is patroling")
-	move_target = orignal_position + Vector2(randi_range(-200,200), randi_range(-200,200))
-	
-func retreat_ai(): # Current Target must be set to retreat
-	if not fix_curr_ai:
-		print(self, " is retreating")
-		move_target = 2 * position - current_target.position
-		switch_ai.start(switch_ai.wait_time + randi_range(-2,2))
-		fix_curr_ai = true
-
-func ai_control(): # TODO: How to properly do intelligent AI
-	#print(current_target)
-	current_target = null
-	if search_space.in_range.size() > 0:
-		chaser_ai()
-	if current_target == null and not fix_curr_ai:
-		patrol_ai()
-		switch_ai.start(switch_ai.wait_time + randi_range(-2,2))
-		fix_curr_ai = true
-
-
-func _on_switch_ai_timeout():
-	fix_curr_ai = false
-
-func _physics_process(delta):
-	ai_control()
-	if self.position.distance_to(move_target) < 1: # Stop jittering when extremely close to target
-		move_vec = Vector2.ZERO
-	else:
-		move_vec = self.position.direction_to(move_target)
-	super(delta)
+	return [self]

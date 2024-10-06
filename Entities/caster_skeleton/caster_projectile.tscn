@@ -1,0 +1,47 @@
+[gd_scene load_steps=9 format=3 uid="uid://cdcnvs0he55f3"]
+
+[ext_resource type="PackedScene" uid="uid://45n1f4s4g5hm" path="res://Utilities/Base_projectile.tscn" id="1_g05ks"]
+[ext_resource type="Script" path="res://Entities/caster_skeleton/caster_projectile.gd" id="2_vuneo"]
+[ext_resource type="Texture2D" uid="uid://rf7c7vjkykid" path="res://Textures/Effects/35.png" id="3_4ogc7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t7wn7"]
+atlas = ExtResource("3_4ogc7")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0jsxy"]
+atlas = ExtResource("3_4ogc7")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fxe2b"]
+atlas = ExtResource("3_4ogc7")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j8884"]
+atlas = ExtResource("3_4ogc7")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_adhwe"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t7wn7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0jsxy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fxe2b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j8884")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="caster_projectile" instance=ExtResource("1_g05ks")]
+script = ExtResource("2_vuneo")
+
+[node name="AnimatedSprite2D" parent="." index="1"]
+sprite_frames = SubResource("SpriteFrames_adhwe")

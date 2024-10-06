@@ -8,13 +8,11 @@ extends Node
 enum tile_layers {
 	BACKGROUND,
 	PHYSICAL,
-	DESTRUCTIBLE,
 	FOREGROUND,
 }
 
 @onready var ENEMIES = {}
 var ENEMY_PROPERTIES : Array
-@onready var ABILITES = {}
 @onready var BIOME_COLORS = {} # Biome colors is dictionary of biome name -> array of format (R,G,B,A)
 @onready var BIOME_GRID = []
 
@@ -31,18 +29,18 @@ func generate_biome_grid():
 				curr_biomes.append(biome_name)
 				retry = false
 	
-	for i in range(2 * DataContainer.mapSize.x + 1):
+	for i in range(2 * DATABASE.mapSize.x + 1):
 		BIOME_GRID.append([])
-		for j in range(2 * DataContainer.mapSize.y + 1): # Do a 4 way split
-			if (i == DataContainer.mapSize.x and j == 2 * DataContainer.mapSize.y):
+		for j in range(2 * DATABASE.mapSize.y + 1): # Do a 4 way split
+			if (i == DATABASE.mapSize.x and j == 2 * DATABASE.mapSize.y):
 				BIOME_GRID[i].append([255,255,255,255]) #TODO: Find better color for home
-			elif (i >= j and i >= (2 * DataContainer.mapSize.y + 1) - j):
+			elif (i >= j and i >= (2 * DATABASE.mapSize.y + 1) - j):
 				BIOME_GRID[i].append(BIOME_COLORS[curr_biomes[0]])
-			elif (i < j and i >= (2 * DataContainer.mapSize.y + 1) - j):
+			elif (i < j and i >= (2 * DATABASE.mapSize.y + 1) - j):
 				BIOME_GRID[i].append(BIOME_COLORS[curr_biomes[1]])
-			elif (i >= j and i < (2 * DataContainer.mapSize.y + 1) - j):
+			elif (i >= j and i < (2 * DATABASE.mapSize.y + 1) - j):
 				BIOME_GRID[i].append(BIOME_COLORS[curr_biomes[2]])
-			elif (i < j and i < (2 * DataContainer.mapSize.y + 1) - j):
+			elif (i < j and i < (2 * DATABASE.mapSize.y + 1) - j):
 				BIOME_GRID[i].append(BIOME_COLORS[curr_biomes[3]])
 
 func parse_biome_colors():
@@ -60,14 +58,14 @@ func parse_biome_colors():
 	var multi_item_dict : Dictionary = {}
 	var multi_item_list : Array = []
 	for i in csv: # Iterate over csv
-		print(i)
+		#print(i)
 		items.clear()
 		var tile_name = i[0]
 		i.remove_at(0)
 		for j in range(i.size()):
 			items.append(int(i[j]))
 		BIOME_COLORS[tile_name] = items.duplicate(true)
-	print(BIOME_COLORS)
+	#print(BIOME_COLORS)
 
 func parse_enemies():
 	# Read data from csv and save into array
@@ -87,7 +85,6 @@ func parse_enemies():
 	var multi_item_dict : Dictionary = {}
 	var multi_item_list : Array = []
 	for i in csv: # Iterate over csv
-		#print(i)
 		items.clear()
 		var enemy_name = i[0]
 		i.remove_at(0)
@@ -109,23 +106,20 @@ func enemies_parse_multi(index : int, item_list : Array, item_dict : Dictionary)
 				item_dict[item_list[item_index]] = Vector2(int(item_list[item_index + 1]), int(item_list[item_index + 2]))
 				item_index += 3
 			return true
-		"Abilites":
+		"Tags":
 			while item_index < item_list.size():
 				item_dict[item_list[item_index]] = true
 				item_index += 1
 			return true
 	return false
 
-func get_enemy(name : String) -> Array: # Returns array containing the properties of the enemy with the given name
-	return ENEMIES[name]
+func get_enemy(enemy_name : String) -> Array: # Returns array containing the properties of the enemy with the given name
+	return ENEMIES[enemy_name]
 
-func get_enemy_property_index(name : String) -> int: # Returns index of property, if not found returns -2
-	return ENEMY_PROPERTIES.find(name) - 1 # Account for removal of name field
-
-func parse_abilites():
-	pass
+func get_enemy_property_index(propety_name : String) -> int: # Returns index of property, if not found returns -2
+	return ENEMY_PROPERTIES.find(propety_name) - 1 # Account for removal of name field
 
 func dump():
 	print(ENEMIES)
-	print(ABILITES)
+
 

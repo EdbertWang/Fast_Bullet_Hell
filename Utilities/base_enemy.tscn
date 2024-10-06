@@ -1,14 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://dostoik0n0s6w"]
+[gd_scene load_steps=5 format=3 uid="uid://dostoik0n0s6w"]
 
 [ext_resource type="PackedScene" uid="uid://dqe8xadue3a2n" path="res://Utilities/Base_Unit.tscn" id="1_1sulq"]
 [ext_resource type="Script" path="res://Utilities/Base_Enemy.gd" id="2_0h1eu"]
-[ext_resource type="PackedScene" uid="uid://2gcy8et378vy" path="res://Utilities/search_space.tscn" id="3_8kjkf"]
+[ext_resource type="PackedScene" uid="uid://2gcy8et378vy" path="res://Utilities/Entity_Components/search_space.tscn" id="3_8kjkf"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_218co"]
 radius = 5.09902
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_yicrt"]
-radius = 113.018
 
 [node name="Base_Enemy" instance=ExtResource("1_1sulq")]
 script = ExtResource("2_0h1eu")
@@ -17,18 +14,20 @@ spawn_cost = 0
 [node name="CollisionShape2D" parent="." index="1"]
 shape = SubResource("CircleShape2D_218co")
 
-[node name="SearchSpace" parent="." index="3" instance=ExtResource("3_8kjkf")]
-
-[node name="CollisionShape2D" parent="SearchSpace" index="0"]
-shape = SubResource("CircleShape2D_yicrt")
-
-[node name="HurtBox" parent="." index="4"]
+[node name="HurtBox" parent="." index="3"]
 collision_layer = 4
 
-[node name="Switch_AI" type="Timer" parent="." index="5"]
-wait_time = 10.0
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." index="5"]
+target_desired_distance = 20.0
 
-[connection signal="timeout" from="Switch_AI" to="." method="_on_switch_ai_timeout"]
+[node name="Path_Timer" type="Timer" parent="." index="6"]
+wait_time = 0.5
+autostart = true
 
-[editable path="SearchSpace"]
+[node name="SearchSpace" parent="." index="7" instance=ExtResource("3_8kjkf")]
+collision_layer = 0
+collision_mask = 2
+
+[connection signal="timeout" from="Path_Timer" to="." method="_on_path_timer_timeout"]
+
 [editable path="HurtBox"]

@@ -4,7 +4,7 @@ var parent
 var swing_time : float
 var damage : int
 
-func config(s=null,pos=Vector2(0,0), rot = 0, layer = 1,dmg = 5,swing_speed = 0.6, size = Vector2(1,1)):
+func config(s=null,pos=Vector2(0,0), rot = 0, layer = 1,dmg = 5,swing_speed = 0.4, size = Vector2(1,1)):
 	#print("Config Called")
 	parent = s
 	position = pos

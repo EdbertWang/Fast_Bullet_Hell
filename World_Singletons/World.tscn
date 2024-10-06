@@ -1,0 +1,93 @@
+[gd_scene load_steps=12 format=3 uid="uid://73o10yberub2"]
+
+[ext_resource type="Script" path="res://World_Singletons/World.gd" id="1_ug3t1"]
+[ext_resource type="Texture2D" uid="uid://30eoyrovnhqk" path="res://Textures/tiles2.png" id="3_kgivs"]
+[ext_resource type="Script" path="res://World_Singletons/Tile_Base.gd" id="3_kxxga"]
+[ext_resource type="Script" path="res://World_Singletons/Entity_Base.gd" id="5_yo4ob"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_hqphu"]
+vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_jo4d2"]
+vertices = PackedVector2Array(8, 0, -8, 0, -8, -8, 8, -8)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 8, -8, 8, 0, -8, -0.125)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_8y5ha"]
+vertices = PackedVector2Array(8, 8, -8, 8, -8, 0, 8, 0)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-8, 0.25, 8, 0.125, 8, 8, -8, 8)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_05tfw"]
+vertices = PackedVector2Array(0, 8, -8, 8, -8, -8, 0, -8)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, -0.125, -8, 0, 8, -8, 8)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_0bod0"]
+vertices = PackedVector2Array(8, 8, 0, 8, 0, -8, 8, -8)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(0.375, -8, 8, -8, 8, 8, 0.25, 8)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+agent_radius = 0.0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qjha6"]
+texture = ExtResource("3_kgivs")
+0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+0:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_hqphu")
+1:0/0 = 0
+1:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:0/0/physics_layer_0/angular_velocity = 0.0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 0, 8, -0.125, 8, 8, -8, 8)
+1:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_jo4d2")
+2:0/0 = 0
+2:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+2:0/0/physics_layer_0/angular_velocity = 0.0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 0.125, -8, -0.125)
+2:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_8y5ha")
+3:0/0 = 0
+3:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:0/0/physics_layer_0/angular_velocity = 0.0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(0.125, -8, 8, -8, 8, 8, 0.125, 8)
+3:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_05tfw")
+4:0/0 = 0
+4:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+4:0/0/physics_layer_0/angular_velocity = 0.0
+4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 0, -8, -0.125, 8, -8, 8)
+4:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_0bod0")
+5:0/0 = 0
+5:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+5:0/0/physics_layer_0/angular_velocity = 0.0
+5:0/0/custom_data_0 = "exit"
+
+[sub_resource type="TileSet" id="TileSet_57rl5"]
+physics_layer_0/collision_layer = 1
+navigation_layer_0/layers = 1
+custom_data_layer_0/name = "TerrainType"
+custom_data_layer_0/type = 4
+sources/0 = SubResource("TileSetAtlasSource_qjha6")
+
+[node name="World" type="Node2D" groups=["world"]]
+script = ExtResource("1_ug3t1")
+
+[node name="Tile_Base" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_57rl5")
+format = 2
+script = ExtResource("3_kxxga")
+
+[node name="Entity_Base" type="Node" parent="." groups=["entity_base"]]
+script = ExtResource("5_yo4ob")
+spawn_power = 3
+
+[node name="Projectile_Base" type="Node" parent="." groups=["projectile_base"]]

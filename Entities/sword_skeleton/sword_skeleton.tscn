@@ -1,0 +1,194 @@
+[gd_scene load_steps=23 format=3 uid="uid://cw1im2ibwrppe"]
+
+[ext_resource type="PackedScene" uid="uid://dostoik0n0s6w" path="res://Utilities/Base_Enemy.tscn" id="1_70vxc"]
+[ext_resource type="Script" path="res://Entities/sword_skeleton/sword_skeleton.gd" id="2_8yrcx"]
+[ext_resource type="Texture2D" uid="uid://dnvv2orleu5wf" path="res://Textures/Dungeon/Character_animation/monsters_idle/skeleton2/v2/spritesheet.png" id="3_bgupi"]
+[ext_resource type="Script" path="res://Entities/sword_skeleton/Sword_SkeletonFSM.gd" id="3_mxcet"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_65b0v"]
+atlas = ExtResource("3_bgupi")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rblxy"]
+atlas = ExtResource("3_bgupi")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2wr0y"]
+atlas = ExtResource("3_bgupi")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wjjw3"]
+atlas = ExtResource("3_bgupi")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mk40o"]
+atlas = ExtResource("3_bgupi")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mn7xs"]
+atlas = ExtResource("3_bgupi")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xe5p8"]
+atlas = ExtResource("3_bgupi")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s2h52"]
+atlas = ExtResource("3_bgupi")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4tv2o"]
+atlas = ExtResource("3_bgupi")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yaodp"]
+atlas = ExtResource("3_bgupi")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_75ajw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_65b0v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rblxy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2wr0y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wjjw3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mk40o")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mn7xs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xe5p8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s2h52")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4tv2o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yaodp")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 6.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_f3e8t"]
+radius = 5.0
+
+[sub_resource type="Animation" id="Animation_kt17d"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_5u48c"]
+resource_name = "dead"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 0, 0, 1)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_602mg"]
+resource_name = "hurt"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_btgxt"]
+_data = {
+"RESET": SubResource("Animation_kt17d"),
+"dead": SubResource("Animation_5u48c"),
+"hurt": SubResource("Animation_602mg")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5p31f"]
+radius = 6.08276
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tnvff"]
+radius = 200.0
+
+[node name="Sword Skeleton" instance=ExtResource("1_70vxc")]
+collision_layer = 4
+script = ExtResource("2_8yrcx")
+
+[node name="AnimatedSprite2D" parent="." index="0"]
+sprite_frames = SubResource("SpriteFrames_75ajw")
+animation = &"walk"
+
+[node name="CollisionShape2D" parent="." index="1"]
+shape = SubResource("CircleShape2D_f3e8t")
+
+[node name="AnimationPlayer" parent="." index="2"]
+libraries = {
+"": SubResource("AnimationLibrary_btgxt")
+}
+
+[node name="HurtBox" parent="." index="3"]
+visible = false
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" parent="HurtBox" index="0"]
+shape = SubResource("CircleShape2D_5p31f")
+
+[node name="FSM" parent="." index="4"]
+script = ExtResource("3_mxcet")
+
+[node name="NavigationAgent2D" parent="." index="5"]
+path_max_distance = 10.0
+
+[node name="CollisionShape2D" parent="SearchSpace" index="0"]
+shape = SubResource("CircleShape2D_tnvff")
+
+[node name="Sword_Attack_Timer" type="Timer" parent="." index="8"]
+
+[connection signal="timeout" from="Sword_Attack_Timer" to="." method="_on_sword_attack_timer_timeout"]
+
+[editable path="HurtBox"]
+[editable path="SearchSpace"]

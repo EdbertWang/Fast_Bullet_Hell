@@ -1,0 +1,54 @@
+[gd_scene load_steps=8 format=3 uid="uid://bp4jmt2ovybsp"]
+
+[ext_resource type="PackedScene" uid="uid://45n1f4s4g5hm" path="res://Utilities/Base_projectile.tscn" id="1_lr7tl"]
+[ext_resource type="Texture2D" uid="uid://cyj4ld4276nyx" path="res://Textures/dungeon_16/effects/slash_effect_anim_spritesheet.png" id="2_wkrhv"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mbl1e"]
+atlas = ExtResource("2_wkrhv")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bpqvg"]
+atlas = ExtResource("2_wkrhv")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g0nc3"]
+atlas = ExtResource("2_wkrhv")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jf4tl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mbl1e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bpqvg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g0nc3")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_15nxn"]
+size = Vector2(5, 16)
+
+[node name="Sword_Skeleton_Slash" instance=ExtResource("1_lr7tl")]
+collision_layer = 2
+speed = 1001
+damage = 10
+
+[node name="AnimatedSprite2D" parent="." index="1"]
+sprite_frames = SubResource("SpriteFrames_jf4tl")
+
+[node name="CollisionShape2D" parent="." index="2"]
+position = Vector2(-0.5, 0)
+shape = SubResource("RectangleShape2D_15nxn")
+
+[node name="Lifetime" parent="." index="4"]
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Lifetime" to="." method="_on_lifetime_timeout"]

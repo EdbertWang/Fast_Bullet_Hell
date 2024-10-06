@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://dqe8xadue3a2n"]
+[gd_scene load_steps=4 format=3 uid="uid://dqe8xadue3a2n"]
 
 [ext_resource type="Script" path="res://Utilities/Base_Unit.gd" id="1_3b2y0"]
-[ext_resource type="PackedScene" uid="uid://b6ptu8qp0cp60" path="res://Utilities/hurt_box.tscn" id="2_leheu"]
+[ext_resource type="PackedScene" uid="uid://b6ptu8qp0cp60" path="res://Utilities/Entity_Components/hurt_box.tscn" id="2_leheu"]
+[ext_resource type="Script" path="res://Utilities/Entity_Components/FSM.gd" id="3_b7mou"]
 
 [node name="BaseUnit" type="CharacterBody2D"]
 motion_mode = 1
@@ -10,7 +11,7 @@ platform_floor_layers = 4294967040
 safe_margin = 0.3
 script = ExtResource("1_3b2y0")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 
@@ -22,6 +23,9 @@ hurtboxtype = 3
 
 [node name="CollisionShape2D" parent="HurtBox" index="0"]
 shape = null
+
+[node name="FSM" type="Node" parent="."]
+script = ExtResource("3_b7mou")
 
 [connection signal="hurt" from="HurtBox" to="." method="_on_hurt_box_hurt"]
 
