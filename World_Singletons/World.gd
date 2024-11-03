@@ -40,6 +40,7 @@ func move_chunk(move_vec : Vector2): # Load new chunk when player moves into it
 	# a standard x y plane, with the center of the tile grid as (0,0)
 	entity_base.save_enemies(curr_chunk)
 	curr_chunk += move_vec
+	tile_base.curr_chunk = curr_chunk
 	tile_base.unload_chunk()
 	tile_base.generate_chunk(curr_chunk)
 	

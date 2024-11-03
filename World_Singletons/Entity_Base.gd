@@ -13,7 +13,7 @@ func spawn_player(player_pos: Vector2):
 
 func spawn_enemies(curr_chunk : Vector2): # Try to get random enemy spawns
 	var level_size = SINGLETONS.tile_base.level_size
-	var camera_size = SINGLETONS.tile_base.camera_size
+	#var camera_size = SINGLETONS.tile_base.camera_size
 	if curr_chunk in seen_chunks: # respawn enemies
 		for i in seen_chunks[curr_chunk]:
 			var index = enemy_names.find(i["unit_name"])
@@ -28,6 +28,7 @@ func spawn_enemies(curr_chunk : Vector2): # Try to get random enemy spawns
 		var start_index : int = randi_range(0,enemy_names.size() - 1)
 		var curr_index : int = start_index
 		var fail_match : int = 0
+		var loc : Array = SINGLETONS.tile_base.spawn_zones
 		while curr_spawn_power > 0 and fail_match < 2:
 			var curr_enemy : Array = DATABASE.get_enemy(enemy_names[curr_index])
 			var curr_enemy_spawn_cost : int = int(curr_enemy[DATABASE.get_enemy_property_index("SpawnCost")])
@@ -38,12 +39,11 @@ func spawn_enemies(curr_chunk : Vector2): # Try to get random enemy spawns
 				times = max(times,1)
 				curr_spawn_power -= curr_enemy_spawn_cost * times
 				for i in range(times):
-					var spawn_loc : Vector2 = Vector2(randi_range(0,level_size.x) - camera_size.x, randi_range(0,level_size.y) - camera_size.y)
-					
+					#var spawn_loc : Vector2 = Vector2(randi_range(0,level_size.x), randi_range(0,level_size.y))
+					var spawn_loc : Vector2 = loc[randi() % loc.size()]
 					var e = enemies[curr_index].instantiate()
 					for new_e in e.spawn(enemy_names[curr_index], spawn_loc, []): # TODO: passing args to certain enemies
 						self.add_child(new_e)
-					#print("Spawned ", e)
 				start_index = curr_index
 				fail_match = 0
 			curr_index += 1
